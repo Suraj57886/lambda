@@ -1,5 +1,26 @@
 1.lex ✅
-lex-full own steps
+lex-full :
+->lex->bots->create bot->
+traditional bot->bot name->next->default >create bot
+->intents->newIntent(unsave) ani untadi
+->add utterances
+->add slots
+->if u want custom slot
+->save intent upto here
+->bots->ur bot->slot types->add slot type->
+->select blank slot->add values to it.
+->back to intent
+->add slot->type:newly created slot type
+->if wanted add card and buttons for it(for twilio card is not supported)
+->if req has conditional branching-> select which slot u want(choose numbers only)
+->additional settings/operations->scroll down
+->conditional branching->on success->condition
+->ex: {noOfSeats}<1
+->response: oops! min number is 1.
+->update slot->save intent
+->build and test the bot
+
+
 lex with twilio:
 first lex bot ready
 create or sign-in in twilio.com
