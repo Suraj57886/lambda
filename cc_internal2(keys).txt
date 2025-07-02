@@ -1,0 +1,142 @@
+1.lex ✅
+lex-full own steps
+lex with twilio:
+first lex bot ready
+create or sign-in in twilio.com
+messaging-> try it out-> send a WhatsApp message->
+	copy code to given WhatsApp number
+	then a new message comes then
+	go to bot -> channel integrations
+	add/create channel
+	select twilio
+	give name , alias, language, account sid, auth key
+	then click create
+	then open it again u'll get callback URL
+paste callback URL in sandbox setting of same twilio tab
+then click save
+and simply start with utterances in WhatsApp
+then add chat
+
+2.vpc with nat gateway
+later
+
+
+3.cloud front ✅
+->create s3 bucket give ACL permissions
+->enable static web hoisting
+->add index.html and an image
+->give permissions to images also
+->go to create cloud front distribution
+->give a name
+->select s3 created as origin
+->enable firewall protections
+->then wait until it is deployed
+->copy url under domain name
+->paste it and add /index.html or /picture.jpg
+->should be visible
+
+
+4.sns & sqs
+SNS:✅
+->SNS service-> create topic->standard->give topic name
+->SNS service ->create subscription->ARN auto, protocol-Email, endpoint-a mail id.
+->then confirmation mail will be sent to endpoint(check spam also)
+->now time to create bucket(very simple only name)
+->bucket ->properties->event notifications
+->create event notification->give name
+->event types->only object creation
+->destination->will be SNS topic->and choose our created SNS
+->save changes
+->add any object into bucket-> you will get mail notification
+
+SQS:✅
+->create SQS queue->standard version-> give name->click create
+->navigate to created SNS queue->send and receive messages.
+->type a sentence and send click send message
+->under receive messages->click poll for messages and wait to receive messages
+->now go to lambda service
+->create a function using blueprint->give name->under execution role select create a new role from AWS policy templates
+->give a role name
+->give SQS poller permissions for policy templates
+->click create function
+->now we need to add trigger
+->trigger configurations->SQS->created SQS
+->then click add 
+->now go to queue and send a message
+->this time message is automatically received by lambda
+->now under queue->monitoring->check graphs
+
+
+5.dynamodb:✅
+->dynamoDB->create table->give table name->give partition key name and type
+->create table
+->now add data->select table->actions->create item
+->either using form or using json
+->choose partiQL on left and run custom queries on table
+->select table and click explore table items
+->first, scan operation
+->similar to executing query but params are given using GUI
+->i.e add filters and click run and see the outputs
+
+->now Query operation
+->for this we must need partition_key value of the record
+->then click run and see the output
+
+6.lambda with trigger S3 and update DynamoDB:✅
+->create bucket->give name->unblock all public access
+->create DynamoDB table->give name->give unique partition key
+->create lambda function->give name->run time-python
+->permissions->role->use Existing role->LabRole(or create using IAM)
+->change the code->deploy
+->add trigger->select s3->select bucket->select actions
+->now add objects into bucket
+->should be added into DynamoDB table
+
+7 IAM---users,roles,groups --- both with cli and gui
+GUI:
+->IAM->users->give name->provide user access to aws console
+->i want to create a iam user
+->custom password->give password
+-> disable users must create a new password
+->next
+->set permissions->
+	user groups: if existing group
+	copy :if any user exits
+	attach policies directly->give s3,ec2 full access
+->then create user
+->in another browser->sign in ->id->suraj_ikkada->id
+->username and password prev created->sign in
+->access permitted activities and show denied access for other services
+
+CLI:
+->IAM->users->create user->give username-> disable provide user access to management console
+->then next
+->permissions-> Administrator Acess
+->User created
+->install aws cli in system
+->check version aws --version
+->to login into created user aws configure->
+					get access key ID and secret access key from 'create access key' option in the new user
+->region : us-east-1
+->format: json
+->to check users: aws iam list-users
+->now we try to create another user using this user
+->command:  aws iam create-user --user-name (new_user_name)
+->to check list of users: aws iam list-users
+->now for this second iam cli user created we need to grant s3 access
+->command: aws iam attach-user-policy --user-name (new_user_name) --policy-arn arn:aws:iam::aws:policy/AmazonS3FullAccess
+->now that user will be granted s3 full access
+->to login into that again use: aws configure
+->again create secret access key
+->for aws configure:
+	access key ID
+	secret access key
+	region
+	json
+->we are now logged into new_user_name
+->to create bucket: aws s3 mb s3://(bucket_name)
+->create a file: echo "akjnrwsd" > test.txt
+-> adding file to bucket: aws s3 cp test.tst s3://(bucket_name)
+
+------FINISHED----------
+
